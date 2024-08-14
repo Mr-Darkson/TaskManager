@@ -1,0 +1,21 @@
+# Этап сборки
+FROM gradle:latest AS build
+WORKDIR /app
+
+# Копируем файл сборки Gradle и исходный код
+COPY build.gradle .
+COPY settings.gradle .
+COPY src/ src/
+
+# Запускаем сборку проекта с помощью Gradle
+RUN gradle build --no-daemon
+
+# Этап выполнения
+FROM openjdk:21-ea-31-slim
+WORKDIR /app
+
+# Копируем скомпилированный JAR файл из этапа сборки
+COPY --from=build /app/build/libs/*.jar app.jar
+
+# Запускаем приложение
+CMD ["java", "-jar", "app.jar"]
