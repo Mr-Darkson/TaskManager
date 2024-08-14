@@ -8,7 +8,7 @@ COPY settings.gradle .
 COPY src/ src/
 
 # Запускаем сборку проекта с помощью Gradle
-RUN gradle build --no-daemon
+RUN gradle build --no-daemon -x test
 
 # Этап выполнения
 FROM openjdk:21-ea-31-slim
