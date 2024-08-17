@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * DTO хранящее в себе данные для аутентификации пользователя
+ */
 @Data
 public class UserCredentialsDto {
 

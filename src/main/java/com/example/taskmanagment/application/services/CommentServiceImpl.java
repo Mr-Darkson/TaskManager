@@ -23,13 +23,22 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для работы с комментариями
+ */
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
+
+
+    /**
+     * Создаёт новый комментарий на основе DTO-обновления комментария и ID задачи.
+     * @param commentDto DTO обновления. Хранит в себе допустимые для редактирования данные, поступающие от пользователя.
+     * @param taskId Идентификатор задачи
+     */
     @Override
     public void createComment(CommentUpdateDTO commentDto, String taskId)  {
         User authenticatedUser = getUserFromSecurityContext();
@@ -43,6 +52,12 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
     }
 
+    /**
+     * Удаляет комментарий по его ID
+     * @param commentId Идентификатор комментария
+     * @throws CommentNotFoundException Выбрасывается, если комментарий не найден
+     * @throws PermissionDeniedException Выбрасывается, если у пользователя нет доступа к удалению комментария
+     */
     @Override
     public void delete(String commentId) throws CommentNotFoundException, PermissionDeniedException {
         User authenticatedUser = getUserFromSecurityContext();
@@ -53,6 +68,14 @@ public class CommentServiceImpl implements CommentService {
         } else throw new PermissionDeniedException();
     }
 
+    /**
+     * Получает все комментарии определённого поста согласно пагинации.
+     * @param taskId Идентификатор задачи
+     * @param pageStr Порядковый номер страницы, которую пытается получить пользователь
+     * @param sizeStr Количество комментариев на странице, которую хочет получить пользователь
+     * @return List<CommentViewDTO> Список комментариев в формате DTO-Отображения
+     * @throws TaskNotFoundException Выбрасывается, если не найдена задача
+     */
     @Override
     public List<CommentViewDTO> getCommentsByTask(String taskId, String pageStr, String sizeStr) throws TaskNotFoundException {
         long page = Long.parseLong(pageStr);
