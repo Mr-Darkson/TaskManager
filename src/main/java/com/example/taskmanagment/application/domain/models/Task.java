@@ -3,10 +3,7 @@ package com.example.taskmanagment.application.domain.models;
 import com.example.taskmanagment.application.domain.enums.PriorityLevel;
 import com.example.taskmanagment.application.domain.enums.TaskStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,7 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @Table(name = "tasks")

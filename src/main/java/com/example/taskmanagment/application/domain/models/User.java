@@ -3,9 +3,7 @@ package com.example.taskmanagment.application.domain.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,7 +12,8 @@ import java.util.UUID;
 
 @Builder
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Table(name = "users")
 public class User {

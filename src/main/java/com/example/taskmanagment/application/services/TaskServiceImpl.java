@@ -23,6 +23,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для работы с задачами
+ */
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
@@ -31,6 +34,10 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
 
 
+    /**
+     * Создаёт новую задачу по данным с DTO-обновления
+     * @param taskUpdateDTO DTO-обновление
+     */
     @Override
     public void createTask(TaskUpdateDTO taskUpdateDTO) {
         User authenticatedUser = getUserFromSecurityContext();
@@ -50,6 +57,13 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+
+    /**
+     * Получить задачу по её ID
+     * @param id идентификатор задачи
+     * @return TaskViewDTO DTO-отображение
+     * @throws TaskNotFoundException выбрасывается, если не найдена задача
+     */
     @Override
     public TaskViewDTO getTaskById(String id) throws TaskNotFoundException {
         Task task = taskRepository.findById(UUID.fromString(id))
@@ -57,6 +71,15 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskDto(task);
     }
 
+    /**
+     * Получает на вход ID задачи и её DTO-обновление. В задаче, с переданным ID, поля заменяются на те, что переданы в DTO и не равны null
+     * @param taskId идентификатор задачи
+     * @param update DTO-обновление
+     * @return TaskViewDTO DTO-отображение
+     * @throws TaskNotFoundException выбрасывается, если задача не найдена
+     * @throws UserNotFoundException выбрасывается, если не найден новый человек, назначенный на роль исполнителя
+     * @throws PermissionDeniedException выбрасывается, если у пользователя нет прав на выполнение данной команды
+     */
     @Override
     public TaskViewDTO updateTask(String taskId, TaskUpdateDTO update) throws TaskNotFoundException, UserNotFoundException, PermissionDeniedException {
         User authenticatedUser = getUserFromSecurityContext();
@@ -71,6 +94,11 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskDto(taskToUpdate);
     }
 
+    /**
+     * @param taskId идентификатор задачи
+     * @param newStatus новый статус задачи
+     * @return
+     */
     @Override
     public TaskViewDTO changeStatus(String taskId, TaskStatus newStatus) {
         User authenticatedUser = getUserFromSecurityContext();
