@@ -6,9 +6,12 @@ import com.example.taskmanagment.adapters.in.security.dto.RefreshTokenDto;
 import com.example.taskmanagment.adapters.in.security.dto.UserCredentialsDto;
 import com.example.taskmanagment.application.domain.dto.UserDto;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.naming.AuthenticationException;
 
+
+@Transactional
 public interface UserService {
     JwtAuthenticationDto signIn(UserCredentialsDto userCredentialsDto) throws AuthenticationException;
 

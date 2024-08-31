@@ -7,9 +7,11 @@ import com.example.taskmanagment.application.domain.dto.TaskUpdateDTO;
 import com.example.taskmanagment.application.domain.dto.TaskViewDTO;
 import com.example.taskmanagment.application.domain.enums.PriorityLevel;
 import com.example.taskmanagment.application.domain.enums.TaskStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface TaskService {
 
     void createTask(TaskUpdateDTO task);

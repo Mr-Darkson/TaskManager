@@ -2,9 +2,11 @@ package com.example.taskmanagment.application.ports.in;
 
 import com.example.taskmanagment.application.domain.dto.CommentUpdateDTO;
 import com.example.taskmanagment.application.domain.dto.CommentViewDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface CommentService {
 
 
